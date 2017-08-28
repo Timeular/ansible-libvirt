@@ -8,6 +8,10 @@
   set_fact:
     libvirt_all_domains: "{{ libvirt_list_all_result.stdout_lines }}"
 
+- debug:
+    msg: "{{item}}"
+  with_items: "{{ libvirt_domain_names }}"
+
 - name: undefine machine
   command: 'virsh undefine "{{ item }}"'
   when: item in libvirt_all_domains

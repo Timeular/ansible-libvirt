@@ -69,7 +69,7 @@ libvirt_domain:
     users:
     - name: 'ubuntu'
       gecos: 'Ubuntu'
-      ssh-authorized-keys: [] # required!
+      ssh-authorized-keys: ['ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD4aGpkTnX4RI0AFywyBUK4iABtkaJLIgAywwOtEfxTxadXAZDy8wdlLrGTP40DqljtVHjISKaHxRQ9GiL371VKZnRLXb3yB0mKnH1n9T68z0SEAwtJ4pTWYhAWwtE9sMrt4wgpTLZWcJf+HPb7HctbUms9xb+wk/vvn6NpP824f9t6cnKbOnNYyYg/E4Gpo9QBftbUkNcfPPJ/tFn/6c07s/Wec7Sws1RTHcu0ajH19qazu3aM5A+q7SqKP7PcIPPW1oN1B7T0SRBClPhuFAucsCxBGlpoF8a8cXKBLYjStjnZuhyYm6qdN3tBX/uEO8IMDptCOypfUkl9Xph1Spmj enadel@Pengi'] # required!
       shell: '/bin/bash'
       sudo: 'ALL=(ALL) NOPASSWD:ALL'
       groups: 'adm,audio,cdrom,dialout,floppy,video,plugdev,dip,netdev' # comma separated string!
@@ -194,7 +194,7 @@ libvirt_cloud_config_users: "{{ (libvirt_domain.cloud_config | default({}, true)
 libvirt_cloud_config_default_user:
   name: 'ubuntu'
   gecos: 'Ubuntu'
-  ssh-authorized-keys: [] # required!
+  ssh-authorized-keys: ['ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD4aGpkTnX4RI0AFywyBUK4iABtkaJLIgAywwOtEfxTxadXAZDy8wdlLrGTP40DqljtVHjISKaHxRQ9GiL371VKZnRLXb3yB0mKnH1n9T68z0SEAwtJ4pTWYhAWwtE9sMrt4wgpTLZWcJf+HPb7HctbUms9xb+wk/vvn6NpP824f9t6cnKbOnNYyYg/E4Gpo9QBftbUkNcfPPJ/tFn/6c07s/Wec7Sws1RTHcu0ajH19qazu3aM5A+q7SqKP7PcIPPW1oN1B7T0SRBClPhuFAucsCxBGlpoF8a8cXKBLYjStjnZuhyYm6qdN3tBX/uEO8IMDptCOypfUkl9Xph1Spmj enadel@Pengi'] # required!
   shell: '/bin/bash'
   sudo: 'ALL=(ALL) NOPASSWD:ALL'
   groups: 'adm,audio,cdrom,dialout,floppy,video,plugdev,dip,netdev' # comma separated string!
@@ -299,10 +299,10 @@ libvirt_images_path: "/var/lib/libvirt/images" # path on the host, where all the
 # template for the stored facts hash (values are variable/fact names)
 libvirt_domain_fact_template: >-
   {
-    u"ssh_port": {{ libvirt_result_ssh_port }},
-    u"rdp_port": {{ libvirt_result_rdp_port }},
-    u"winrm_port": {{ libvirt_result_winrm_port }},
-    u"groups": {{ libvirt_domain_groups }}
+    "ssh_ip": "{{ libvirt_result_ip_address }}",
+    "rdp_port": {{ libvirt_result_rdp_port }},
+    "winrm_port": {{ libvirt_result_winrm_port }},
+    "groups": {{ libvirt_domain_groups }}
   }
 
 ansible_facts_path: '/etc/ansible/facts.d' # path where local Ansible facts are stored & read
