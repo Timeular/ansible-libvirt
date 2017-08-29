@@ -1,0 +1,11 @@
+# Molecule managed
+
+---
+- address: 192.168.122.120
+  instance: moleculefour
+  port: '22'
+  user: ubuntu
+- address: 192.168.122.177
+  instance: moleculefive
+  port: '22'
+  user: ubuntu

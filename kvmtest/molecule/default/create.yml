@@ -1,0 +1,75 @@
+---
+- name: Create
+  hosts: localhost
+  connection: local
+  gather_facts: False
+  no_log: no
+  vars:
+    molecule_file: "{{ lookup('env', 'MOLECULE_FILE') }}"
+    molecule_ephemeral_directory: "{{ lookup('env', 'MOLECULE_EPHEMERAL_DIRECTORY') }}"
+    molecule_scenario_directory: "{{ lookup('env', 'MOLECULE_SCENARIO_DIRECTORY') }}"
+    molecule_instance_config: "{{ lookup('env', 'MOLECULE_INSTANCE_CONFIG') }}"
+    molecule_yml: "{{ lookup('file', molecule_file) | from_yaml }}"
+  tasks:
+    - name: Launch KVM
+      include_role:
+        name: domain/create
+      vars:
+        libvirt_base_image: /home/enadel/Downloads/ubuntu-trusty.img
+        libvirt_domain:
+          # basic arguments
+          groups: ['cluster'] # names of Ansible nodes/groups used to provision the domain
+          name: "{{item.name}}" # name/uuid of the domain (empty means new uuid)
+          title: 'Machine1' # title of the vm
+          description: 'test' # description of the vm
+        libvirt_images_path: /home/enadel/Downloads
+        ansible_facts_path: "{{molecule_ephemeral_directory}}"
+        vm:
+          memory: "{{item.memory}}" # RAM memory available to the VM
+          vcpu: 1 # number of cores designated to the VM
+          vcpu_placement: 'static' # options 'auto', 'static', defaults to 'numatune'
+          vcpu_cpuset: [] # list of host CPU numbers the VM can run on
+          networks: ["{{item.network}}"] # libvirts id of networks this VM is part of
+          disk_size: "{{item.disk_size}}" # use this to change first disk size
+          features: ['acpi', 'apic', 'pae'] # vm features available
+      register: kvms
+      with_items: "{{ molecule_yml.platforms }}"
+
+    - debug: var=kvms
+
+    - shell: >
+        virsh net-dhcp-leases {{item.network}}
+        | grep "{{item.name}} "
+        | awk '{match($0,/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/); ip = substr($0,RSTART,RLENGTH); print ip}'
+      with_items: "{{ molecule_yml.platforms }}"
+      register: ip_results
+
+    - set_fact:
+        instance_conf_dict: {
+          instance: "{{item.item.name}}",
+          address: "{{item.stdout}}",
+          port: '22',
+          user: ubuntu}
+      with_items: "{{ip_results.results}}"
+      register: instance_config_dict
+
+    # - name: Populate instance config dict
+    #   set_fact:
+    #     instance_conf_dict: 
+    #       address: '{{ item.created_host.ip }}'
+    #       instance: '{{ libvirt_result_domain_name }}'
+    #       port: '22'
+    #       user: ubuntu
+    #   with_items: "{{kvms.results}}"
+    #   register: instance_config_dict
+
+    - name: Convert instance config dict to a list
+      set_fact: instance_conf_dict="{{instance_config_dict.results | map(attribute='ansible_facts.instance_conf_dict') | list }}"
+
+    - name: Dump instance config
+      copy:
+        # NOTE(retr0h): Workaround for Ansible 2.2.
+        #               https://github.com/ansible/ansible/issues/20885
+        content: "{{ instance_conf_dict | to_json | from_json | molecule_to_yaml | molecule_header }}"
+        dest: "{{ molecule_instance_config }}"
+

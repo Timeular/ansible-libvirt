@@ -1,0 +1,18 @@
+{
+"moleculefive":{
+    "groups": [
+        "cluster"
+    ], 
+    "rdp_port": -1, 
+    "ssh_ip": "192.168.122.177", 
+    "winrm_port": -1
+},
+"Testing":{
+    "groups": [
+        "cluster"
+    ], 
+    "rdp_port": -1, 
+    "ssh_port": 22006, 
+    "winrm_port": -1
+}
+}

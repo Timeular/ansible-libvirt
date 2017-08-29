@@ -1,0 +1,29 @@
+---
+- name: Destroy
+  hosts: localhost
+  connection: local
+  gather_facts: False
+  no_log: no
+  vars:
+    molecule_file: "{{ lookup('env', 'MOLECULE_FILE') }}"
+    molecule_ephemeral_directory: "{{ lookup('env', 'MOLECULE_EPHEMERAL_DIRECTORY') }}"
+    molecule_yml: "{{ lookup('file', molecule_file) | from_yaml }}"
+  tasks:
+    - name: Launch KVM
+      include_role:
+        name: domain/kill
+      vars:
+        name: "{{molecule_yml.platforms.name}}"
+        libvirt_base_image: /home/enadel/Downloads/ubuntu-trusty.img
+        libvirt_domain:
+          # basic arguments
+          groups: ['cluster'] # names of Ansible nodes/groups used to provision the domain
+          name: '{{plat.name}}'# name/uuid of the domain (empty means new uuid)
+          title: 'Machine1' # title of the vm
+          description: 'test' # description of the vm
+        libvirt_images_path: /home/enadel/Downloads
+        ansible_facts_path: "{{molecule_ephemeral_directory}}"
+        libvirt_domain_names: "{{plat.name}}"
+      with_items: "{{ molecule_yml.platforms }}"
+      loop_control:
+        loop_var: plat
