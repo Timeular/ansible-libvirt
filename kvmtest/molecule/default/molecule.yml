@@ -16,13 +16,5 @@ platforms:
     network: 'default'
 provisioner:
   name: ansible
-  options:
-    v: True
-  playbooks:
-    create: create.yml
-    destroy: destroy.yml
-    converge: playbook.yml
-  lint:
-    name: ansible-lint
 scenario:
   name: default

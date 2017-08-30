@@ -9,6 +9,21 @@
   changed_when: no
   register: virsh_list_all_result
 
+- name: getIPs
+  shell: > 
+    virsh net-dhcp-leases default 
+    | grep "{{item}} "
+    | awk '{match($0,/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/); ip = substr($0,RSTART,RLENGTH); print ip}'
+  with_items: "{{virsh_list_running_result.stdout_lines}}"
+  register: ip_results
+
+- set_fact:
+    instance_conf_dict: {
+      'instance': "{{item.item}}",
+      'address': "{{item.stdout}}" }
+  with_items: "{{ip_results.results}}"
+  register: instance_config_dict
+
 - name: extract facts
   set_fact:
     libvirt_running_domains: "{{ virsh_list_running_result.stdout_lines }}"

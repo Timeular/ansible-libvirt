@@ -19,7 +19,7 @@ libvirt_images_ubuntu_cloud_gpg_keys: "D2EB44626FDDC30B513D5BB71A5D6C4C7DB87C81"
 libvirt_images_ubuntu_cloud_image_dist: "{{ libvirt_images_ubuntu_cloud_image_url | basename }}.dist"
 
 # name of the converted image
-libvirt_images_ubuntu_cloud_image_name: "{{ libvirt_images_ubuntu_cloud_image_sha256 }}-{{ libvirt_images_ubuntu_cloud_image_url | basename }}"
+libvirt_images_ubuntu_cloud_image_name: "{{ libvirt_images_ubuntu_cloud_image_url | basename }}"
 
 # path where the images are stored
 libvirt_images_path: "/var/lib/libvirt/images"

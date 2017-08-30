@@ -69,7 +69,7 @@ libvirt_domain:
     users:
     - name: 'ubuntu'
       gecos: 'Ubuntu'
-      ssh-authorized-keys: ['ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD4aGpkTnX4RI0AFywyBUK4iABtkaJLIgAywwOtEfxTxadXAZDy8wdlLrGTP40DqljtVHjISKaHxRQ9GiL371VKZnRLXb3yB0mKnH1n9T68z0SEAwtJ4pTWYhAWwtE9sMrt4wgpTLZWcJf+HPb7HctbUms9xb+wk/vvn6NpP824f9t6cnKbOnNYyYg/E4Gpo9QBftbUkNcfPPJ/tFn/6c07s/Wec7Sws1RTHcu0ajH19qazu3aM5A+q7SqKP7PcIPPW1oN1B7T0SRBClPhuFAucsCxBGlpoF8a8cXKBLYjStjnZuhyYm6qdN3tBX/uEO8IMDptCOypfUkl9Xph1Spmj enadel@Pengi'] # required!
+      ssh-authorized-keys: ['ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDmCpaZ+/eDaWG/3O8DLpIf5DrOxynkX0XSGXXiZmfLhGpB/VeyQcR2f1dRdy9dmVPKtEIRRwKfq8vpYZOt6Q8eXXZcDHNU2gC/76C9SGp/vJWBF56fTncMekK1vyNQAR92t/VboKs9ZpaskpOPZgMfsLwcjFBrS4cQS8PTdT9not7SJ2alUE6+1/5EdNcuvDtdjtRSXOsTX1Lt7TONSslcF/jXihtdtKeMyuen9yJE1XybyYAyil9IuYxJHsUj1o4utx56Cqwl6abm0VvqEmj27a4vT2FMc3Lmk24SgeuNbAHKhw4tihLaq9qnwfhBt34pPlkTKhCvLVqJMNDh8f87 en186015@MUSEN186015-228']
       shell: '/bin/bash'
       sudo: 'ALL=(ALL) NOPASSWD:ALL'
       groups: 'adm,audio,cdrom,dialout,floppy,video,plugdev,dip,netdev' # comma separated string!
@@ -194,7 +194,7 @@ libvirt_cloud_config_users: "{{ (libvirt_domain.cloud_config | default({}, true)
 libvirt_cloud_config_default_user:
   name: 'ubuntu'
   gecos: 'Ubuntu'
-  ssh-authorized-keys: ['ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD4aGpkTnX4RI0AFywyBUK4iABtkaJLIgAywwOtEfxTxadXAZDy8wdlLrGTP40DqljtVHjISKaHxRQ9GiL371VKZnRLXb3yB0mKnH1n9T68z0SEAwtJ4pTWYhAWwtE9sMrt4wgpTLZWcJf+HPb7HctbUms9xb+wk/vvn6NpP824f9t6cnKbOnNYyYg/E4Gpo9QBftbUkNcfPPJ/tFn/6c07s/Wec7Sws1RTHcu0ajH19qazu3aM5A+q7SqKP7PcIPPW1oN1B7T0SRBClPhuFAucsCxBGlpoF8a8cXKBLYjStjnZuhyYm6qdN3tBX/uEO8IMDptCOypfUkl9Xph1Spmj enadel@Pengi'] # required!
+  ssh-authorized-keys: ['ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDA+aZ/CS/5Zc7wVYOu37HLgFGrZOkKuWtFs26hXTiuhfCjeWUKNRLJyCTdqulMt+az0FOuD7ep4LPWPWeTNrgcYATGwZR2+SNovj226WutkdPBlmq/X58fAh1c0iYDEpNorb8E6ZVzSvs72+Tl0GtewYlCoSru9QijuPVRBFQGXSsrbKjIdeUoE8WZSgzj5AgvZANUI3DZ6jBNY4NgENzQtzYRdSjNfFVxckcVfSl+kwAZa5CrprYod5raVr+pJ3+Pq5PEuHTxLw0Ic7oUcABSz3xUVemS+uGW19ITJPa41DI0p61ne2v9Chc4/FeO/uytMcyxHKPu/1Zy9o5I4Vk/ ubuntu@en186015-devenv']
   shell: '/bin/bash'
   sudo: 'ALL=(ALL) NOPASSWD:ALL'
   groups: 'adm,audio,cdrom,dialout,floppy,video,plugdev,dip,netdev' # comma separated string!
@@ -300,6 +300,7 @@ libvirt_images_path: "/var/lib/libvirt/images" # path on the host, where all the
 libvirt_domain_fact_template: >-
   {
     "ssh_ip": "{{ libvirt_result_ip_address }}",
+    "ssh_port": "{{ libvirt_result_ssh_port }}",
     "rdp_port": {{ libvirt_result_rdp_port }},
     "winrm_port": {{ libvirt_result_winrm_port }},
     "groups": {{ libvirt_domain_groups }}
