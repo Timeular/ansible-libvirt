@@ -2,6 +2,6 @@
 - hosts: localhost
   remote_user: root
   roles:
-    - ../libvirt-kvm
+    - ../ansible-libvirt
   vars:
     state: setup
