@@ -1,0 +1,7 @@
+---
+
+- name: Setup Host
+  include: setup_host.yml
+  when: state == 'setup'
+
+

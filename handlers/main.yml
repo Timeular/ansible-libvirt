@@ -1,0 +1,4 @@
+---
+# handlers file for libvirt-kvm
+- name: restart libvirt
+  service: name=libvirt-bin state=restarted
