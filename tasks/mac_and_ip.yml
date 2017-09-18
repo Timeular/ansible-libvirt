@@ -18,4 +18,4 @@
 - name: mac_and_ip | extract facts
   set_fact:
     libvirt_result_ip_address: "{{ extract_ip_address_result.stdout }}"
-libvirt_result_mac_address: "{{ extract_mac_address_result.stdout }}"
+  libvirt_result_mac_address: "{{ extract_mac_address_result.stdout }}"
