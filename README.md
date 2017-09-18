@@ -6,13 +6,6 @@ A role to set up Libvirt with KVM as well as create KVM machines. Forked from ht
 Role Variables
 --------------
 
-### Download state
-``` yaml
-libvirt_image_url : The url of the image 
-```
-
-### For Running a VirtualMachine
-
 ``` yaml
 
 libvirt_domain:
