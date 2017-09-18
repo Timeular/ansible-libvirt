@@ -27,5 +27,5 @@
     command: "qemu-img convert -O qcow2 {{ libvirt_image_dist }} {{ libvirt_image_name }}"
     args:
       chdir: "{{ libvirt_images_path }}"
-    creates: "{{ libvirt_images_path }}/{{ libvirt_image_name }}"
+      creates: "{{ libvirt_images_path }}/{{ libvirt_image_name }}"
   when: download.stat.exists == False
