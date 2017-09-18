@@ -1,21 +1,21 @@
 ---
 
 - name: Setup Host
-  include_tasks: setup_host.yml
+  include: setup_host.yml
   when: state == 'setup' or state == 'install'
 
 - name: Setup Network
-  include_tasks: network.yml
+  include: network.yml
   when: state == 'network' or state == 'install'
 
 - name: Download Image
-  include_tasks: image.yml
+  include: image.yml
   when: state == 'create'
 
 - name: Creating Machine
-  include_tasks: machine.yml
+  include: machine.yml
   when: state == 'create'
 
 - name: Destroy Machine
-  include_tasks: destroy.yml
+  include: destroy.yml
   when: state == 'destroy'
