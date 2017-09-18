@@ -82,14 +82,6 @@ libvirt_domain:
 
   image_url: ""
 
-  #
-  # 1. 'base-image'
-  # ----------
-  # a simple image
-  base_image:
-    path: "" # path to the cloud image for the domain
-    mode: 'snapshot' # options: snapshot, copy
-
   extra_disks: []
   # - id: 'data-disk' # logical name of the disk (required)
   #   mount_path: '/data' # vm path for mounting (default)
@@ -179,8 +171,8 @@ libvirt_install_type: "{{ libvirt_domain.install_type | default('base-image', tr
 # 1. 'base-image'
 # ----------
 # a simple image
-libvirt_base_image: "{{ (libvirt_domain.base_image | default({}, true)).path | default('', true) }}" # path to the cloud image for the domain
-libvirt_base_image_mode: "{{ (libvirt_domain.base_image | default({}, true)).mode | default('snapshot', true) }}" # options: snapshot, copy
+libvirt_base_image: "{{libvirt_images_path}}/{{libvirt_image_name}}" # path to the cloud image for the domain
+libvirt_base_image_mode: 'snapshot'
 
 libvirt_extra_disks: "{{ libvirt_domain.extra_disks | default([], true) }}"
 # - id: 'data-disk' # logical name of the disk (required)
