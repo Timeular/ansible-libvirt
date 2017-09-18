@@ -5,4 +5,5 @@
     - ../ansible-libvirt
   vars:
     state: destroy
-    to_destroy: ['Testing']
+    to_destroy: 
+      - 'Testing'

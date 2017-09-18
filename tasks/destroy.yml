@@ -12,7 +12,6 @@
 
 - name: undefine machine
   command: 'virsh undefine "{{ item }}"'
-  when: item in libvirt_all_domains
   with_items: "{{ to_destroy }}"
 
 - name: delete images
