@@ -1,0 +1,31 @@
+---
+- name: Ensure image path exists
+  file:
+    path: "{{ libvirt_images_path }}"
+    state: directory
+    recurse: yes
+
+- name: Check if image is already downloaded
+  stat:
+    path: "{{ libvirt_images_path }}/{{ libvirt_image_dist }}"
+  register: download
+
+- block: 
+  - name: download image disk
+    get_url:
+      url: "{{ libvirt_image_url }}"
+      dest: "{{ libvirt_images_path }}/{{ libvirt_image_dist }}"
+    register: libvirt_images_ubuntu_cloud_download_result
+
+  - name: remove modified image
+    file:
+      path: "{{ libvirt_images_path }}/{{ libvirt_image_name }}"
+      state: absent
+    when: libvirt_images_ubuntu_cloud_download_result.changed
+
+  - name: convert the image
+    command: "qemu-img convert -O qcow2 {{ libvirt_image_dist }} {{ libvirt_image_name }}"
+    args:
+      chdir: "{{ libvirt_images_path }}"
+    creates: "{{ libvirt_images_path }}/{{ libvirt_image_name }}"
+  when: download.stat.exists == False

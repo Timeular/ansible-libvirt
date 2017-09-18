@@ -11,3 +11,17 @@ libvirt_host_packages:
 
 network_up_hooks:
 - 'echo 1 > /proc/sys/net/ipv4/conf/eth0/proxy_arp'
+
+libvirt_image_url: "https://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img"
+
+# name of the image downloaded
+libvirt_images_ubuntu_cloud_image_dist: "{{ libvirt_image_url | basename }}.dist"
+
+# name of the converted image
+libvirt_images_ubuntu_cloud_image_name: "{{ libvirt_image_url | basename }}"
+
+# path where the images are stored
+libvirt_images_path: "/var/lib/libvirt/images"
+libvirt_images_ubuntu_cloud_tmp_folder: '/tmp'
+
+ansible_facts_path: '/etc/ansible/facts.d' # path where local Ansible facts are stored & read

@@ -4,4 +4,6 @@
   include: setup_host.yml
   when: state == 'setup'
 
-
+- name: Download Image
+  include: image.yml
+  when: state == 'download'
