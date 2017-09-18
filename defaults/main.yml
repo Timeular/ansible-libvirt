@@ -270,3 +270,7 @@ libvirt_domain_fact_template: >-
     "winrm_port": {{ libvirt_result_winrm_port }},
     "groups": {{ libvirt_domain_groups }}
   }
+
+### DESTROYING
+
+to_destroy: [] # required!

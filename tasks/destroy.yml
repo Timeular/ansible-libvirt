@@ -1,0 +1,23 @@
+---
+
+- name: shutdown
+  shell: >
+    virsh shutdown "{{ item }}";
+    while virsh list | grep -q -F " {{ item }} "; do
+      sleep 2
+    done
+  register: libvirt_machine_shutdown_result
+  until: libvirt_machine_shutdown_result.rc == 0
+  with_items: "{{ to_destroy }}"
+
+- name: undefine machine
+  command: 'virsh undefine "{{ item }}"'
+  when: item in libvirt_all_domains
+  with_items: "{{ to_destroy }}"
+
+- name: delete images
+  shell: 'rm -rf {{ item }}.*'
+  args:
+    chdir: "{{ libvirt_images_path }}"
+    removes: "{{ libvirt_images_path }}/{{ item }}.img"
+  with_items: "{{ to_destroy }}"

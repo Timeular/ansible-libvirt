@@ -15,3 +15,7 @@
 - name: Creating Machine
   include: machine.yml
   when: state == 'create'
+
+- name: Destroy Machine
+  include: destroy.yml
+  when: state == 'destroy'
