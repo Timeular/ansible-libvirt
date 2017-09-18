@@ -13,7 +13,7 @@
 - block: 
   - name: download image disk
     get_url:
-      url: "{{ libvirt_image_url }}"
+      url: "{{ libvirt_domain.image_url }}"
       dest: "{{ libvirt_images_path }}/{{ libvirt_image_dist }}"
     register: download_result
 

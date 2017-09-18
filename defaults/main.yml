@@ -17,10 +17,10 @@ network_up_hooks:
 libvirt_image_url: "https://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img"
 
 # name of the image downloaded
-libvirt_image_dist: "{{ libvirt_image_url | basename }}.dist"
+libvirt_image_dist: "{{ libvirt_domain.image_url  | basename }}.dist"
 
 # name of the converted image
-libvirt_image_name: "{{ libvirt_image_url | basename }}"
+libvirt_image_name: "{{ libvirt_domain.image_url | basename }}"
 
 # path where the images are stored
 libvirt_images_path: "/var/lib/libvirt/images"
@@ -80,12 +80,14 @@ libvirt_domain:
   # Valid install_types:
   install_type: 'base-image' # way to install the VM (this only affects the first run!)
 
+  image_url: ""
+
   #
   # 1. 'base-image'
   # ----------
   # a simple image
   base_image:
-    path: "{{libvirt_images_path}}/{{libvirt_image_name}}" # path to the cloud image for the domain
+    path: "" # path to the cloud image for the domain
     mode: 'snapshot' # options: snapshot, copy
 
   extra_disks: []
@@ -177,7 +179,7 @@ libvirt_install_type: "{{ libvirt_domain.install_type | default('base-image', tr
 # 1. 'base-image'
 # ----------
 # a simple image
-libvirt_base_image: "{{ (libvirt_domain.base_image | default({}, true)).path | default('{{libvirt_images_path}}/{{libvirt_image_name}}', true) }}" # path to the cloud image for the domain
+libvirt_base_image: "{{ (libvirt_domain.base_image | default({}, true)).path | default('', true) }}" # path to the cloud image for the domain
 libvirt_base_image_mode: "{{ (libvirt_domain.base_image | default({}, true)).mode | default('snapshot', true) }}" # options: snapshot, copy
 
 libvirt_extra_disks: "{{ libvirt_domain.extra_disks | default([], true) }}"
