@@ -54,7 +54,7 @@ To Create a VM
 - hosts: localhost
   remote_user: root
   roles:
-    - ../ansible-libvirt
+    - kireledan.libvirt
   vars:
     state: create
     libvirt_domain:
@@ -75,7 +75,7 @@ To Destroy the VM
 - hosts: localhost
   remote_user: root
   roles:
-    - ../ansible-libvirt
+    - kireledan.libvirt
   vars:
     state: destroy
     to_destroy: 
