@@ -262,9 +262,6 @@ libvirt_vm_cpu: "{{ libvirt_domain.cpu | default(libvirt_vm_cpu_fast, true) }}"
 #     policy: 'require' # options 'force', 'require', 'optional', 'disable', 'forbid'
 #   - 'smx' # feature with default policy 'require'
 
-# configuration options
-libvirt_images_path: "/tmp" # path on the host, where all the images are stored
-
 # template for the stored facts hash (values are variable/fact names)
 libvirt_domain_fact_template: >-
   {
@@ -274,5 +271,3 @@ libvirt_domain_fact_template: >-
     "winrm_port": {{ libvirt_result_winrm_port }},
     "groups": {{ libvirt_domain_groups }}
   }
-
-ansible_facts_path: '/etc/ansible/facts.d' # path where local Ansible facts are stored & read
