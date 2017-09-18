@@ -34,6 +34,9 @@ libvirt_domain:
     disk_size: "12G" # use this to change first disk size
     features: ['acpi', 'apic', 'pae'] # vm features available
 
+  image_url: 'url to use'
+  pubkey: 'ssh key to add to instance'
+
 libvirt_cloud_config_default_user:
   name: 'ubuntu'
   gecos: 'Ubuntu'
@@ -67,6 +70,7 @@ To Create a VM
       title: 'Machine1' 
       description: 'test'
       image_url: "https://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img"
+      pubkey: "your ssh-key pub"
 
 ```
 ( The playbook will print the IP address of the machine created )
