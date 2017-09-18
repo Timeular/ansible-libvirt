@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+  remote_user: root
+  roles:
+    - ../ansible-libvirt
+  vars:
+    state: create
+    libvirt_domain:
+      groups: ['cluster'] 
+      name: 'Testing'
+      title: 'Machine1' 
+      description: 'test'
+      base_image:
+        path: /tmp/trusty-server-cloudimg-amd64-disk1.img
