@@ -7,7 +7,7 @@
 
 - name: extract all domain names
   set_fact:
-  libvirt_all_domains: "{{ libvirt_list_all_result.stdout_lines }}"
+    libvirt_all_domains: "{{ libvirt_list_all_result.stdout_lines }}"
 
 - name: shutdown
   shell: >
