@@ -40,8 +40,6 @@ libvirt_cloud_config_default_user:
   ssh-authorized-keys: ['']
 ```
 
-
-
 Example Playbook
 ----------------
 
@@ -68,17 +66,26 @@ To Create a VM
       name: 'Testing'
       title: 'Machine1' 
       description: 'test'
-    libvirt_image_url: "https://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img"
+      image_url: "https://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img"
 
 ```
+( The playbook will print the IP address of the machine created )
 
+
+To Destroy the VM
+
+``` yaml
+- hosts: localhost
+  remote_user: root
+  roles:
+    - ../ansible-libvirt
+  vars:
+    state: destroy
+    to_destroy: 
+      - 'Testing'
+```
 
 License
 -------
 
-BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+MIT
