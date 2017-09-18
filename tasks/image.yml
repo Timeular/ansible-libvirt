@@ -15,13 +15,13 @@
     get_url:
       url: "{{ libvirt_image_url }}"
       dest: "{{ libvirt_images_path }}/{{ libvirt_image_dist }}"
-    register: libvirt_images_ubuntu_cloud_download_result
+    register: download_result
 
   - name: remove modified image
     file:
       path: "{{ libvirt_images_path }}/{{ libvirt_image_name }}"
       state: absent
-    when: libvirt_images_ubuntu_cloud_download_result.changed
+    when: download_result.changed
 
   - name: convert the image
     command: "qemu-img convert -O qcow2 {{ libvirt_image_dist }} {{ libvirt_image_name }}"
