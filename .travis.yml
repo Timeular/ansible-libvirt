@@ -14,7 +14,7 @@ script:
    # Check the role/playbook's syntax.
   - ansible-playbook -i tests/inventory tests/test.yml --syntax-check
   - "ansible-playbook -i tests/inventory tests/test.yml --connection=local --sudo"
-  - "ansible-playbook -i tests/inventory tests/test_download.yml --connection=local --sudo"
+  - "ansible-playbook -i tests/inventory tests/test_download.yaml --connection=local --sudo"
 
   # Run the role/playbook again, checking to make sure it's idempotent.
   - >
