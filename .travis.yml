@@ -16,7 +16,6 @@ script:
   - "ansible-playbook -i tests/inventory tests/test.yml --connection=local --sudo"
   - "ansible-playbook -i tests/inventory tests/test_download.yml --connection=local --sudo"
   - "ansible-playbook -i tests/inventory tests/test_network.yml --connection=local --sudo"
-  - "ansible-playbook -i tests/inventory tests/test_machine.yml --connection=local --sudo"
 
   # Run the role/playbook again, checking to make sure it's idempotent.
   - >
