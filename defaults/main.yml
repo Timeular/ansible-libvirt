@@ -12,6 +12,8 @@ libvirt_host_packages:
 network_up_hooks:
 - 'echo 1 > /proc/sys/net/ipv4/conf/eth0/proxy_arp'
 
+#### IMAGE DOWNLOAD
+
 libvirt_image_url: "https://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img"
 
 # name of the image downloaded
@@ -25,3 +27,19 @@ libvirt_images_path: "/tmp"
 libvirt_images_ubuntu_cloud_tmp_folder: '/tmp'
 
 ansible_facts_path: '/etc/ansible/facts.d' # path where local Ansible facts are stored & read
+
+#### NETWORKING SET UP
+
+
+libvirt_bridge_path: '/etc/libvirt/ansible/networks'
+
+libvirt_bridges:
+- name: default
+  forward: nat
+  bridge: virbr0
+  domain: vm
+  ip_address: 192.168.122.1
+  ip_netmask: 255.255.255.0
+  dhcp_start: 192.168.122.2
+  dhcp_end:   192.168.122.253
+  ipv6_prefix: 64

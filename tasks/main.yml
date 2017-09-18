@@ -7,3 +7,7 @@
 - name: Download Image
   include: image.yml
   when: state == 'download'
+
+- name: Setup Network
+  include: network.yml
+  when: state == 'network'
