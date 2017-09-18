@@ -23,8 +23,7 @@ libvirt_image_dist: "{{ libvirt_image_url | basename }}.dist"
 libvirt_image_name: "{{ libvirt_image_url | basename }}"
 
 # path where the images are stored
-libvirt_images_path: "/tmp"
-libvirt_images_ubuntu_cloud_tmp_folder: '/tmp'
+libvirt_images_path: "/var/lib/libvirt/images"
 
 ansible_facts_path: '/etc/ansible/facts.d' # path where local Ansible facts are stored & read
 
