@@ -10,7 +10,7 @@
 
 - name: Download Image
   include_tasks: image.yml
-  when: state == 'download' or state == 'install'
+  when: state == 'create'
 
 - name: Creating Machine
   include_tasks: machine.yml

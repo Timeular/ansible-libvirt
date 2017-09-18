@@ -85,7 +85,7 @@ libvirt_domain:
   # ----------
   # a simple image
   base_image:
-    path: # path to the cloud image for the domain
+    path: "{{libvirt_images_path}}/{{libvirt_image_name}}"# path to the cloud image for the domain
     mode: 'snapshot' # options: snapshot, copy
 
   extra_disks: []

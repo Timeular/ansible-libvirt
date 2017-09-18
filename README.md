@@ -6,21 +6,72 @@ A role to set up Libvirt with KVM as well as create KVM machines. Forked from ht
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+### Download state
+``` yaml
+libvirt_image_url : The url of the image 
+```
 
-Dependencies
-------------
+### For Running a VirtualMachine
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+``` yaml
+
+libvirt_domain:
+  # basic arguments
+  groups: [] # names of Ansible nodes/groups used to provision the domain
+  name: # name/uuid of the domain (empty means new uuid)
+  title: '' # title of the vm
+  description: '' # description of the vm
+  apt_mirror: ''
+  # note: if you do not provide a domain_id each run will create a new vm!
+
+  # default VM configuration
+  vm:
+    memory: "512MiB" # RAM memory available to the VM
+    vcpu: 1 # number of cores designated to the VM
+    vcpu_placement: 'static' # options 'auto', 'static', defaults to 'numatune'
+    vcpu_cpuset: [] # list of host CPU numbers the VM can run on
+    networks: ['default'] # libvirts id of networks this VM is part of
+    disk_size: "12G" # use this to change first disk size
+    features: ['acpi', 'apic', 'pae'] # vm features available
+
+libvirt_cloud_config_default_user:
+  name: 'ubuntu'
+  gecos: 'Ubuntu'
+  ssh-authorized-keys: ['']
+```
+
+
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+To set up the host. 
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+    - hosts: localhost
+	  remote_user: root
+	  roles:
+	    - kireledan.libvirt
+	  vars:
+	    state: install
+
+To Create a VM
+
+``` yaml
+- hosts: localhost
+  remote_user: root
+  roles:
+    - ../ansible-libvirt
+  vars:
+    state: create
+    libvirt_domain:
+      groups: ['cluster'] 
+      name: 'Testing'
+      title: 'Machine1' 
+      description: 'test'
+    libvirt_image_url: "https://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img"
+
+```
+
 
 License
 -------
