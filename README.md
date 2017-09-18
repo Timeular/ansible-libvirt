@@ -3,11 +3,6 @@ Role Name
 
 A role to set up Libvirt with KVM as well as create KVM machines. Forked from https://github.com/hicknhack-software/ansible-libvirt
 
-Requirements
-------------
-
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
-
 Role Variables
 --------------
 
