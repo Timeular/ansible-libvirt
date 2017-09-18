@@ -11,4 +11,4 @@
       title: 'Machine1' 
       description: 'test'
       base_image:
-        path: /tmp/trusty-server-cloudimg-amd64-disk1.img
+        path: "/{{libvirt_images_path}}/trusty-server-cloudimg-amd64-disk1.img"
