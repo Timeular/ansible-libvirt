@@ -2,12 +2,16 @@
 
 - name: Setup Host
   include: setup_host.yml
-  when: state == 'setup'
-
-- name: Download Image
-  include: image.yml
-  when: state == 'download'
+  when: state == 'setup' or state == 'install'
 
 - name: Setup Network
   include: network.yml
-  when: state == 'network'
+  when: state == 'network' or state == 'install'
+
+- name: Download Image
+  include: image.yml
+  when: state == 'download' or state == 'install'
+
+- name: Creating Machine
+  include: machine.yml
+  when: state == 'create'
