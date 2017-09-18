@@ -15,10 +15,10 @@ network_up_hooks:
 libvirt_image_url: "https://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img"
 
 # name of the image downloaded
-libvirt_images_ubuntu_cloud_image_dist: "{{ libvirt_image_url | basename }}.dist"
+libvirt_image_dist: "{{ libvirt_image_url | basename }}.dist"
 
 # name of the converted image
-libvirt_images_ubuntu_cloud_image_name: "{{ libvirt_image_url | basename }}"
+libvirt_image_name: "{{ libvirt_image_url | basename }}"
 
 # path where the images are stored
 libvirt_images_path: "/var/lib/libvirt/images"
