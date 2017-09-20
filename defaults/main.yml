@@ -22,8 +22,11 @@ libvirt_image_dist: "{{ libvirt_domain.image_url  | basename }}.dist"
 # name of the converted image
 libvirt_image_name: "{{ libvirt_domain.image_url | basename }}"
 
-# path where the images are stored
+# path where the converted images are stored
 libvirt_images_path: "/var/lib/libvirt/images"
+
+# path where the images are downloaded
+image_download_path: "/tmp"
 
 ansible_facts_path: '/etc/ansible/facts.d' # path where local Ansible facts are stored & read
 
