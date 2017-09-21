@@ -6,32 +6,29 @@
   no_log: no
   vars:
     molecule_file: "{{ lookup('env', 'MOLECULE_FILE') }}"
-    molecule_ephemeral_directory: "{{ lookup('env', 'MOLECULE_EPHEMERAL_DIRECTORY') }}"
-    molecule_scenario_directory: "{{ lookup('env', 'MOLECULE_SCENARIO_DIRECTORY') }}"
     molecule_instance_config: "{{ lookup('env', 'MOLECULE_INSTANCE_CONFIG') }}"
     molecule_yml: "{{ lookup('file', molecule_file) | from_yaml }}"
   tasks:
+    - name: Get public key
+      shell: 'cat ~/.ssh/id_rsa.pub'
+      register: key
     - name: Launch KVM
       include_role:
-        name: domain/create
+        name: kireledan.libvirt
       vars:
-        libvirt_base_image: ~/trusty-server-cloudimg-amd64-disk1.img
+        state: create
+        libvirt_images_path: '/home/enadel/.images'
         libvirt_domain:
           # basic arguments
-          groups: ['cluster'] # names of Ansible nodes/groups used to provision the domain
+          groups: ['molecule'] # names of Ansible nodes/groups used to provision the domain
           name: "{{item.name}}" # name/uuid of the domain (empty means new uuid)
-          title: 'Machine1' # title of the vm
-          description: 'test' # description of the vm
-        libvirt_images_path: "{{molecule_ephemeral_directory}}"
-        ansible_facts_path: "{{molecule_ephemeral_directory}}"
-        vm:
-          memory: "{{item.memory}}" # RAM memory available to the VM
-          vcpu: 1 # number of cores designated to the VM
-          vcpu_placement: 'static' # options 'auto', 'static', defaults to 'numatune'
-          vcpu_cpuset: [] # list of host CPU numbers the VM can run on
-          networks: ["{{item.network}}"] # libvirts id of networks this VM is part of
-          disk_size: "{{item.disk_size}}" # use this to change first disk size
-          features: ['acpi', 'apic', 'pae'] # vm features available
+          title: 'Molecule' # title of the vm
+          image_url: "{{item.img}}"
+          vm:
+            memory: "{{item.memory}}" # RAM memory available to the VM
+            vcpu: "{{item.vcpu}}" # number of cores designated to the VM
+            disk_size: "{{item.disk_size}}" # use this to change first disk size
+          pubkey: "{{key.stdout}}"
       register: kvms
       with_items: "{{ molecule_yml.platforms }}"
 

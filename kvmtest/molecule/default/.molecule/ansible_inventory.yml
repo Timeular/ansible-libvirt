@@ -4,21 +4,22 @@
 all:
   hosts:
     moleculefive: &id001
-      ansible_host: 192.168.122.177
+      ansible_host: 192.168.122.81
       ansible_port: '22'
       ansible_ssh_common_args: -o UserKnownHostsFile=/dev/null -o ControlMaster=auto
         -o ControlPersist=60s -o IdentitiesOnly=yes -o StrictHostKeyChecking=no
       ansible_user: ubuntu
       connection: ssh
     moleculefour: &id002
-      ansible_host: 192.168.122.120
+      ansible_host: 192.168.122.83
       ansible_port: '22'
       ansible_ssh_common_args: -o UserKnownHostsFile=/dev/null -o ControlMaster=auto
         -o ControlPersist=60s -o IdentitiesOnly=yes -o StrictHostKeyChecking=no
       ansible_user: ubuntu
       connection: ssh
-ungrouped:
+cluster:
   hosts:
     moleculefive: *id001
     moleculefour: *id002
+ungrouped:
   vars: {}

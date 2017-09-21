@@ -9,11 +9,17 @@ platforms:
     vcpu: 1
     disk_size: "12G"
     network: 'default'
+    img: "https://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img"
+    groups: 
+      - 'cluster'
   - name: moleculefive
     memory: "512MiB"
     vcpu: 1
     disk_size: "12G"
     network: 'default'
+    img: "https://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img"
+    groups: 
+      - 'cluster'
 provisioner:
   name: ansible
 scenario:
