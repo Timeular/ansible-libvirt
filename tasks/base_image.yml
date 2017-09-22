@@ -2,10 +2,10 @@
 - name: base_image | copy
   command: >
     cp
-    {{ libvirt_base_image }}
+    {{ image_download_path }}/{{libvirt_image_name}}
     {{ libvirt_result_domain_name }}.img
   args:
-    chdir: "{{ libvirt_images_path }}"
+    chdir: "{{ image_download_path }}"
     creates: "{{ libvirt_images_path }}/{{ libvirt_result_domain_name }}.img"
   register: libvirt_copy_image_result
   when: libvirt_base_image_mode == 'copy'
@@ -14,10 +14,10 @@
   command: >
     qemu-img create
     -f qcow2
-    -b {{ libvirt_base_image }}
+    -b {{ image_download_path }}/{{libvirt_image_name}}
     {{ libvirt_result_domain_name }}.img
   args:
-    chdir: "{{ libvirt_images_path }}"
+    chdir: "{{ image_download_path }}"
     creates: "{{ libvirt_images_path }}/{{ libvirt_result_domain_name }}.img"
   register: libvirt_snapshot_image_result
   when: libvirt_base_image_mode == 'snapshot'
