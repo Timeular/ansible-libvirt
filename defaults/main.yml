@@ -113,8 +113,7 @@ libvirt_domain:
     users:
     - name: 'ubuntu'
       gecos: 'Ubuntu'
-      ssh-authorized-keys:
-        - "{{pubkey}}"
+      ssh-authorized-keys: "{{pubkey}}"
       shell: '/bin/bash'
       sudo: 'ALL=(ALL) NOPASSWD:ALL'
       groups: 'adm,audio,cdrom,dialout,floppy,video,plugdev,dip,netdev' # comma separated string!
@@ -209,8 +208,7 @@ libvirt_cloud_config_users: "{{ (libvirt_domain.cloud_config | default({}, true)
 libvirt_cloud_config_default_user:
   name: 'ubuntu'
   gecos: 'Ubuntu'
-  ssh-authorized-keys:
-    - "{{pubkey}}"
+  ssh-authorized-keys: "{{pubkey}}"
   shell: '/bin/bash'
   sudo: 'ALL=(ALL) NOPASSWD:ALL'
   groups: 'adm,audio,cdrom,dialout,floppy,video,plugdev,dip,netdev' # comma separated string!

@@ -3,10 +3,24 @@ Role Name
 
 A role to set up Libvirt with KVM as well as create KVM machines. Forked from https://github.com/hicknhack-software/ansible-libvirt
 
+
+One Line Install
+----------------
+
+```
+sudo ansible-galaxy install kireledan.libvirt
+echo -ne "- hosts: localhost\n  remote_user: root\n  roles:\n    - kireledan.libvirt\n  vars:\n    state: install" > inst.yml
+ansible-playbook inst.yml
+```
+
 Role Variables
 --------------
 
 ``` yaml
+
+image_download_path: "Path to download images"
+
+libvirt_images_path: "Path of converted images (Be careful with changing this)"
 
 libvirt_domain:
   # basic arguments
@@ -33,20 +47,20 @@ libvirt_domain:
 libvirt_cloud_config_default_user:
   name: 'ubuntu'
   gecos: 'Ubuntu'
-  ssh-authorized-keys: ['']
 ```
 
 Example Playbook
 ----------------
 
 To set up the host. 
-
+```
     - hosts: localhost
-	  remote_user: root
-	  roles:
-	    - kireledan.libvirt
-	  vars:
-	    state: install
+  	  remote_user: root
+  	  roles:
+  	    - kireledan.libvirt
+  	  vars:
+  	    state: install
+```
 
 To Create a VM
 
