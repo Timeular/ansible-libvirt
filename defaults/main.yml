@@ -176,6 +176,7 @@ libvirt_install_type: "{{ libvirt_domain.install_type | default('base-image', tr
 # 1. 'base-image'
 # ----------
 # a simple image
+
 libvirt_base_image: "{{libvirt_images_path}}/{{libvirt_image_name}}" # path to the cloud image for the domain
 libvirt_base_image_mode: 'snapshot'
 

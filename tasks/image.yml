@@ -22,10 +22,10 @@
       path: "{{ image_download_path }}/{{ libvirt_image_name }}"
       state: absent
     when: download_result.changed
-
-  - name: convert the image
-    command: "qemu-img convert -O qcow2 {{ libvirt_image_dist }} {{ libvirt_image_name }}"
-    args:
-      chdir: "{{ image_download_path }}"
-      creates: "{{ image_download_path }}/{{ libvirt_image_name }}"
   when: download.stat.exists == False
+
+- name: convert the image
+  command: "qemu-img convert -O qcow2 {{ libvirt_image_dist }} {{ libvirt_images_path }}/{{ libvirt_image_name }}"
+  args:
+    chdir: "{{ image_download_path }}"
+    creates: "{{ libvirt_images_path }}/{{ libvirt_image_name }}"
