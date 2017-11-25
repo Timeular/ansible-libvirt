@@ -1,9 +1,9 @@
 - stat:
-    path: "{{ image_download_path }}/{{libvirt_image_name}}"
+    path: "{{ libvirt_images_path }}/{{libvirt_image_name}}"
   register: libvirt_base_image_stat_result
 
 - fail:
-    msg: "base image '{{ image_download_path }}/{{libvirt_image_name}}' does not exist"
+    msg: "base image '{{ libvirt_images_path }}/{{libvirt_image_name}}' does not exist"
   when: not libvirt_base_image_stat_result.stat.exists
 
 - include: domain_id.yml
