@@ -30,7 +30,7 @@
   shell: >
     virsh net-destroy {{ item[0].item.name }};
     virsh net-undefine {{ item[0].item.name }}
-  when: (item[1].rc == 0) and (item[0].changed)
+  when: not ansible_check_mode and (item[1].rc == 0) and (item[0].changed)
   with_together:
   - "{{ configure_result.results }}"
   - "{{ check_states_result.results }}"

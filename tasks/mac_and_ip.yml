@@ -14,8 +14,10 @@
     arp -an | grep -F {{ extract_mac_address_result.stdout }} | cut -f 2 -d "(" | cut -f 1 -d ")"
   changed_when: no
   register: extract_ip_address_result
+  when: not ansible_check_mode
 
 - name: mac_and_ip | extract facts
   set_fact:
     libvirt_result_ip_address: "{{ extract_ip_address_result.stdout }}"
     libvirt_result_mac_address: "{{ extract_mac_address_result.stdout }}"
+  when: not ansible_check_mode

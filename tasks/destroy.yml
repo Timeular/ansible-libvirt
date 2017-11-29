@@ -8,6 +8,7 @@
 - name: extract all domain names
   set_fact:
     libvirt_all_domains: "{{ libvirt_list_all_result.stdout_lines }}"
+  when: not ansible_check_mode
 
 - name: shutdown
   shell: >
@@ -18,10 +19,11 @@
   register: libvirt_machine_shutdown_result
   until: libvirt_machine_shutdown_result.rc == 0
   with_items: "{{ to_destroy }}"
+  when: not ansible_check_mode
 
 - name: undefine machine
   command: 'virsh undefine "{{ item }}"'
-  when: item in libvirt_all_domains
+  when: not ansible_check_mode and (item in libvirt_all_domains)
   with_items: "{{ to_destroy }}"
 
 - name: delete images

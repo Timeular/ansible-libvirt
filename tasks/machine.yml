@@ -32,7 +32,7 @@
 
   - name: create_domain | start
     command: "virsh start {{ libvirt_result_domain_name }}"
-  when: libvirt_result_domain_name not in libvirt_all_domains
+  when: not ansible_check_mode and (libvirt_result_domain_name not in libvirt_all_domains)
 
 - name: autostart | list domains
   command: virsh list --autostart --name
@@ -41,7 +41,7 @@
 
 - name: autostart | enable
   command: "virsh autostart {{ libvirt_result_domain_name }}"
-  when: libvirt_autostart and (libvirt_result_domain_name not in libvirt_list_autostart_result.stdout_lines)
+  when: not ansible_check_mode and (libvirt_autostart and (libvirt_result_domain_name not in libvirt_list_autostart_result.stdout_lines))
 
 - name: autostart | disable
   command: "virsh autostart {{ libvirt_result_domain_name }} --disable"
@@ -54,6 +54,8 @@
     host: "{{ libvirt_result_ip_address }}"
     port: 22
     timeout: 60 # seconds
+  when: not ansible_check_mode
 
 - debug:
     msg: "Machine created at {{libvirt_result_ip_address}}"
+  when: not ansible_check_mode
